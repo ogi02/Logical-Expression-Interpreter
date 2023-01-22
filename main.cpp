@@ -13,40 +13,6 @@
 
 using namespace std;
 
-//     DEFINE   func1(a,  b): "a & b "
-// DEFINE func1(): "a & b"
-// DEFINE func1(a): "a & c"
-// DEFINE func1() "a & b"
-// DEFINE func1): "a & b"
-// DEFINE func1(a, b: "a & b"
-// DEFINE func1(a, b): a & b"
-// DEFINE func1(a, b): "a & b
-
-//     DEFINE   func(a,  b): "a & b "
-// DEFINE func1(a, b): "a & b"
-// DEFINE func2(a, b, c): "func1(a, b) | c"
-// DEFINE func3(a, b, c): "func1(a, b, c) | c"
-// DEFINE func4(a, b, c): "a | b & !c"
-
-// DEFINE func5(a,b): "(a|!b)|(!a&!b)&(a&b)"
-// DEFINE func6(a,b): "(a|b)|(a&b)&(a&b)"
-// DEFINE func7(a,b): "(a|b)&(!a&b)|(!a&b)|(a|!b)"
-
-// SOLVE func1(1, 0)
-// Result: 0
-// SOLVE func2(1, 0, 1)
-// Result: 1
-// SOLVE func5(0, 0)
-// SOLVE func5(0, 1)
-// SOLVE func5(1, 0)
-// SOLVE func5(1, 1)
-// Result:
-
-// ALL func4
-
-// FIND 0001,0010,0101,0110,1000,1010,1101,1111
-// FIND 00000,00010,00100,00110,01001,01010,01100,01110,10001,1001x,10101,10111,11001,11010,1110x,11111
-
 Queue<Function> get_functions_from_file(string filename) {
     Queue<Function> functions;
     // get commands from file
