@@ -46,7 +46,20 @@ int compare_precedence(char op1, char op2) {
     }
 }
 
-Vector<char> convert_to_rpn(string infix) {
+void validate_expression(string infix, Vector<char> arguments) {
+    int len = get_length(infix);
+    for (int i = 0; i < len; i++) {
+        // check if operand is in the vector of arguments
+        if (is_operand(infix[i]) && !arguments.contains(infix[i])) {
+            // cast to string so that it can be appended to error
+            string arg = string(1, infix[i]);
+            string error = "Argument \"" + arg + "\" is not defined!";
+            throw invalid_argument(error);
+        }
+    }
+}
+
+Vector<char> convert_to_rpn(string infix, Vector<char> arguments) {
     // stack is used to store brackets and operators
     Vector<char> stack;
     // result is used to store result
@@ -58,14 +71,20 @@ Vector<char> convert_to_rpn(string infix) {
     // ensure first and last element in infix are quotes
     // otherwise the definition of the function is not correct
     if (infix[0] != '\"' || infix[len - 1] != '\"') {
-        throw new runtime_error("Incorrect definition: Reason: Missing \"");
+        throw runtime_error("Incorrect definition: Reason: Missing \"");
     }
+
+    // validate operands in expression
+    validate_expression(infix, arguments);
 
     // remove quotes
     // ensure there are opening and closing bracket on the outside level wrapping the whole expression
     // because without them the operator on the highest level will be left out from the RPN expression
-    remove_char_at_index(0, infix, len);
-    replace_char_at_index(len - 1, ')', infix, len);
+    remove_char_at_index(0, infix);
+    // -1 because " was removed
+    // -1 because last index is len - 1
+    // total: -2
+    replace_char_at_index(len - 2, ')', infix);
     stack.push_back('(');
 
     char c;

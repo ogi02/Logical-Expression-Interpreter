@@ -1,33 +1,34 @@
-#ifndef LOGICAL_EXPRESSION_INTERPRETER_VECTOR_HH
-#define LOGICAL_EXPRESSION_INTERPRETER_VECTOR_HH
+#ifndef LOGICAL_EXPRESSION_INTERPRETER_QUEUE_HH
+#define LOGICAL_EXPRESSION_INTERPRETER_QUEUE_HH
+
+#include <string>
+#include "function.hh"
+#include "implicant.hh"
 using std::string;
+
 template <typename Object>
 
-class Vector {
+class Queue {
 private:
-    int _size;
+    int _size = 0;
     int _capacity;
     Object* _objects;
 
 public:
     //-------------------------------------------------------------------
-    // CONSTRUCTOR: Vector()
-    // Empty vector
+    // CONSTRUCTOR: Queue()
+    // Empty queue
     //
     // PARAMETERS:
-    // len (int) -> length of vector (default = 5)
+    // cap (int) -> capacity of queue (default = 5)
     //-------------------------------------------------------------------
-    Vector(int len = 5);
+    Queue(int cap = 5);
 
     //-------------------------------------------------------------------
-    // CONSTRUCTOR: Vector()
-    // Vector from string
-    //
-    // PARAMETERS:
-    // from (string) -> the string from which a vector will be created
-    // len (int) -> length of string
+    // GETTER: size()
+    // Gets the size of the vector
     //-------------------------------------------------------------------
-    Vector(string from, int len);
+    int size() const;
 
     //-------------------------------------------------------------------
     // OPERATOR: []
@@ -39,37 +40,24 @@ public:
     // RETURNS:
     // (Object&) -> the object at the given index
     //-------------------------------------------------------------------
-    Object& operator[] (int index) const;
+    Object& operator[](int index) const;
 
     //-------------------------------------------------------------------
-    // FUNCTION: size() const
-    // Gets the size of the vector
+    // FUNCTION: first()
+    // Gets the first element of the vector
     // Const prevents modification
     //
     // PARAMETERS:
     // none
     //
     // RETURNS:
-    // (int) -> the size of the vector
+    // (Object) -> the first element of the queue
     //-------------------------------------------------------------------
-    int size() const;
-
-    //-------------------------------------------------------------------
-    // FUNCTION: top()
-    // Gets the top element of the vector
-    // Const prevents modification
-    //
-    // PARAMETERS:
-    // none
-    //
-    // RETURNS:
-    // (Object) -> the top element of the vector
-    //-------------------------------------------------------------------
-    Object top() const;
+    Object first() const;
 
     //-------------------------------------------------------------------
     // FUNCTION: is_empty()
-    // Self explanatory
+    // Checks if queue is empty
     //
     // PARAMETERS:
     // none
@@ -80,20 +68,52 @@ public:
     bool is_empty();
 
     //-------------------------------------------------------------------
-    // FUNCTION: push_back()
-    // Pushes an element in the stack
+    // FUNCTION: get()
+    // Gets object if it exists by comparison
+    // Used for Function class
     //
     // PARAMETERS:
-    // o (const Object&) -> the object that will be pushed
+    // function_name (string) -> the desired function's name
+    // argument_count (int) -> the desired function's argument count
+    //
+    // RETURNS:
+    // (Object&) -> reference to the object
+    //
+    // THROWS:
+    // std::runtime_error -> if the object doesn't exist
+    //-------------------------------------------------------------------
+    Object& get(string function_name, int argument_count);
+
+    //-------------------------------------------------------------------
+    // FUNCTION: get_by_function_name()
+    // Gets object if it exists by function_name
+    //
+    // PARAMETERS:
+    // function_name (string) -> the desired function's name
+    //
+    // RETURNS:
+    // (Object&) -> reference to the object
+    //
+    // THROWS:
+    // std::runtime_error -> if the object doesn't exist
+    //-------------------------------------------------------------------
+    Object& get_by_function_name(string function_name);
+
+    //-------------------------------------------------------------------
+    // FUNCTION: enqueue()
+    // Pushes an element in the queue
+    //
+    // PARAMETERS:
+    // o (const Object&) -> the object that will be enqueued
     //
     // RETURNS:
     // void
     //-------------------------------------------------------------------
-    void push_back(const Object& o);
+    void enqueue(const Object& o);
 
     //-------------------------------------------------------------------
     // FUNCTION: expand()
-    // Expands the vector - allocates more memory, increases capacity
+    // Expands the queue - allocates more memory, increases capacity
     //
     // PARAMETERS:
     // new_capacity (int) -> the new_capacity
@@ -104,30 +124,16 @@ public:
     void expand(int new_capacity);
 
     //-------------------------------------------------------------------
-    // FUNCTION: pop()
-    // Removes and returns the top element in the vector
+    // FUNCTION: dequeue()
+    // Removes and returns the first element in the queue
     //
     // PARAMETERS:
     // none
     //
     // RETURNS:
-    // (Object) -> the top element
+    // (Object) -> the first element
     //-------------------------------------------------------------------
-    Object pop();
-
-    //-------------------------------------------------------------------
-    // FUNCTION: to_string()
-    // Converts the elements of the vector into one string
-    // Implemented only for Vector<char>
-    //
-    // PARAMETERS:
-    // none
-    //
-    // RETURNS:
-    // (string) -> the string representation of the vector
-    //-------------------------------------------------------------------
-    string to_string();
+    Object dequeue();
 };
 
-
-#endif //LOGICAL_EXPRESSION_INTERPRETER_VECTOR_HH
+#endif //LOGICAL_EXPRESSION_INTERPRETER_QUEUE_HH

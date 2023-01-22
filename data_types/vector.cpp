@@ -1,8 +1,7 @@
-#include <string>
 #include "vector.hh"
 
 template <typename Object>
-Vector<Object>::Vector(int len) : _size(0), _capacity(len), _objects(new Object[len]) { }
+Vector<Object>::Vector(int cap) : _capacity(cap), _objects(new Object[cap]) { }
 
 template <>
 Vector<char>::Vector(string from, int len) : _size(len), _capacity(len), _objects(new char[len]) {
@@ -12,7 +11,7 @@ Vector<char>::Vector(string from, int len) : _size(len), _capacity(len), _object
 }
 
 template <typename Object>
-Object& Vector<Object>::operator[] (int index) const {
+Object& Vector<Object>::operator[](int index) const {
     return _objects[index];
 }
 
@@ -32,6 +31,26 @@ bool Vector<Object>::is_empty() {
 }
 
 template <typename Object>
+bool Vector<Object>::contains(Object o) {
+    for (int i = 0; i < _size; i++) {
+        if (_objects[i] == o) {
+            return true;
+        }
+    }
+    return false;
+}
+
+template <typename Object>
+int Vector<Object>::get_index_of(Object o) {
+    for (int i = 0; i < _size; i++) {
+        if (_objects[i] == o) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+template <typename Object>
 void Vector<Object>::push_back(const Object& o) {
     if (_size == _capacity) {
         // + 1 for the beginning when both size and capacity are 0
@@ -48,7 +67,7 @@ void Vector<Object>::expand(int new_capacity) {
     }
 
     // create and fill new array
-    Object *new_objects = new Object[new_capacity];
+    auto *new_objects = new Object[new_capacity];
     for (int i = 0; i < _size; i++) {
         new_objects[i] = _objects[i];
     }
@@ -77,5 +96,7 @@ string Vector<char>::to_string() {
     return res;
 }
 
+template class Vector<int>;
 template class Vector<char>;
 template class Vector<std::string>;
+template class Vector<Node*>;

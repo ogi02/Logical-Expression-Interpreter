@@ -2,7 +2,7 @@
 #define LOGICAL_EXPRESSION_INTERPRETER_RPN_CONVERTER_HH
 #include <string>
 #include <iostream>
-#include "vector.hh"
+#include "../data_types/vector.hh"
 #include "string_utils.hh"
 using std::string;
 
@@ -88,16 +88,34 @@ int precedence(char op);
 int compare_precedence(char op1, char op2);
 
 //-------------------------------------------------------------------
+// FUNCTION: validate_expression()
+// Validates that all operands in the expression are characters
+//
+// PARAMETERS:
+// infix (string) -> the infix expression which will be validated
+// arguments (Vector<char>) -> the arguments of the expression
+//
+// RETURNS:
+// void
+//
+// THROWS:
+// std::invalid_argument -> when two sequential character are operands
+// std::invalid_argument -> when operand is not defined in arguments
+//-------------------------------------------------------------------
+void validate_expression(string infix, Vector<char> arguments);
+
+//-------------------------------------------------------------------
 // FUNCTION: convert_to_rpn
 // Convert an infix expression to RPN (postfix) expression
 // RPN -> reverse polish notation
 //
 // PARAMETERS:
 // infix (string) -> the expression in infix format
+// arguments (Vector<char>) -> the arguments of the expression
 //
 // RETURNS:
 // (Vector<char>) -> vector with the RPN expression
 //-------------------------------------------------------------------
-Vector<char> convert_to_rpn(string infix);
+Vector<char> convert_to_rpn(string infix, Vector<char> arguments);
 
 #endif //LOGICAL_EXPRESSION_INTERPRETER_RPN_CONVERTER_HH
