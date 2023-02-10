@@ -62,8 +62,8 @@ DEFINE func6(a,b): "(a|b)&(!a&b)|(!a&b)|(a|!b)"     -> longer function
 SOLVE func1(1, 0)       -> Result: 0
 SOLVE func2(1, 0, 1)    -> Result: 1
 
-SOLVE func6(1, 0, 1)    -> "func7" is not defined with 3 arguments
-SOLVE func7(1, 0)       -> "func8" is not defined
+SOLVE func6(1, 0, 1)    -> "func6" is not defined with 3 arguments
+SOLVE func7(1, 0)       -> "func7" is not defined
 
 DEFINE func8(a, b, c): "a | b & !c"     -> used for finding truth table
 ALL func8
